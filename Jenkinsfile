@@ -22,6 +22,16 @@ pipeline {
                 }
             }
 
+            stage('SonarQube Test'){
+                steps {
+                 script {
+                     withSonarQubeEnv(credentialsId: 'sonar-id') {
+                         sh "mvn sonar:sonar"
+                     }
+                 }
+             }
+            }
+
     }
 
     post {
