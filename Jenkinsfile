@@ -32,6 +32,21 @@ pipeline {
              }
             }
 
+            stage('SonarQube'){
+                steps {
+                nexusArtifactUploader artifacts:
+                 [[artifactId: 'achat',
+                  classifier: '',
+                  file: 'target/achat-app-1.0.jar',
+                  type: 'jar']],
+                  credentialsId: 'nexus', groupId: 'tn.esprit.rh',
+                  nexusUrl: '192.168.1.100:8081',
+                   nexusVersion: 'nexus2', protocol: 'http',
+                    repository: 'http://192.168.1.100:8081/repository/achat-app/',
+                    version: '1.0'
+             }
+            }
+
     }
 
     post {
