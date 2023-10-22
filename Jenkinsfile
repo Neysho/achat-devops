@@ -32,7 +32,7 @@ pipeline {
              }
             }
 
-            stage('SonarQube'){
+            stage('Nexus'){
                 steps {
                 nexusArtifactUploader artifacts:
                  [[artifactId: 'achat',
