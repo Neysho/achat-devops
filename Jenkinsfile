@@ -16,9 +16,9 @@ pipeline {
                          checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-neysho', url: 'https://github.com/Neysho/achat-devops.git']])
                        }
                   }
-            stage('Compile Maven'){
+            stage('Package Maven'){
                 steps{
-                    sh 'mvn clean compile'
+                    sh 'mvn clean package'
                 }
             }
 
@@ -41,8 +41,8 @@ pipeline {
                   type: 'jar']],
                   credentialsId: 'nexus', groupId: 'tn.esprit.rh',
                   nexusUrl: '192.168.1.100:8081',
-                   nexusVersion: 'nexus2', protocol: 'http',
-                    repository: 'http://192.168.1.100:8081/repository/achat-app/',
+                   nexusVersion: 'nexus3', protocol: 'http',
+                    repository: 'achat-app',
                     version: '1.0'
              }
             }
