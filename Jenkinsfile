@@ -37,7 +37,7 @@ pipeline {
                 nexusArtifactUploader artifacts:
                  [[artifactId: 'achat',
                   classifier: '',
-                  file: 'target/achat-app-1.0.jar',
+                  file: 'target/achat-app.jar',
                   type: 'jar']],
                   credentialsId: 'nexus', groupId: 'tn.esprit.rh',
                   nexusUrl: '192.168.1.100:8081',
