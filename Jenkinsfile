@@ -22,7 +22,7 @@ pipeline {
                 }
             }
 
-            stage('SonarQube Test'){
+            stage('SonarQube'){
                 steps {
                  script {
                      withSonarQubeEnv(credentialsId: 'sonar-id') {
