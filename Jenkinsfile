@@ -46,6 +46,20 @@ pipeline {
                     version: '1.0'
              }
             }
+             stage('docker build'){
+                 steps{
+                         sh ''' ls
+                                docker build -t neysho/achat-backend:1 .
+                         '''
+               }
+             }
+             stage('docker push'){
+                steps{
+                    sh ''' echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
+                                docker push neysho/achat-backend:1
+                    '''
+                }
+             }
 
     }
 
