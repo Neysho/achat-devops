@@ -54,11 +54,11 @@ pipeline {
                }
              }
              stage('docker push'){
-                steps{
+                // steps{
                     // sh ''' echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
                     //             docker push neysho/achat-backend:1
                     // '''
-                }
+                // }
              }
              stage('Docker compose'){
                 steps{
