@@ -6,7 +6,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: achatdb
-      MYSQL_USER: root
+      MYSQL_USER: aziz
       MYSQL_PASSWORD: root
     ports:
       - "3306:3306"
@@ -16,7 +16,7 @@ services:
       - mysql_data:/var/lib/mysql
 
   backend:
-    build: ./
+    image: neysho/achat-backend:1
     container_name: achat_backend
     ports:
       - "8082:8082"
