@@ -37,6 +37,13 @@ pipeline {
                      }
                  }
              }
+             post {  
+                    failure {
+                            slackSend color: "danger", channel: '#jenkins-alerts',
+                             message: "Pipeline failed in stage 'SonarQube'",
+                             teamDomain: 'devneysho', tokenCredentialId: 'slack-alert'
+                     }
+                }
             }
 
             stage('Nexus'){
