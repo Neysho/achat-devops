@@ -110,7 +110,7 @@ pipeline {
             }
             stage('Trivy Scan'){
                 steps{
-                    sh 'trivy image --scanners vuln neysho/achat-backend:1 > backend-scan.txt'
+                    sh 'trivy image --scanners vuln neysho/achat-backend:1  --timeout 35m > backend-scan.txt'
                 }
                 post { 
                     success {
