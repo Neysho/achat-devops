@@ -114,9 +114,8 @@ pipeline {
                 }
                 post { 
                     success {
-                     slackUploadFile filePath: "backend-scan.txt",
-                      channel: '#jenkins-alerts', initialComment:  "Trivy Scan :",
-                     credentialId: 'slack-alert'
+                     slackUploadFile channel: '#jenkins-alerts',
+                      credentialId: 'slack-alert', filePath: 'backend-scan.txt', initialComment: 'Trivy Scan :'
                      } 
                     failure {
                             slackSend color: "danger", channel: '#jenkins-alerts',
