@@ -20,6 +20,13 @@ pipeline {
                 steps{
                     sh 'mvn clean package'
                 }
+                post {  
+                    failure {
+                            slackSend color: "danger", channel: '#jenkins-alerts',
+                             message: "Pipeline failed in stage 'Package Maven'",
+                             teamDomain: 'devneysho', tokenCredentialId: 'slack-alert'
+                     }
+                }
             }
 
             stage('SonarQube'){
@@ -45,6 +52,13 @@ pipeline {
                     repository: 'achat-app',
                     version: '1.0'
              }
+             post {  
+                    failure {
+                            slackSend color: "danger", channel: '#jenkins-alerts',
+                             message: "Pipeline failed in stage 'Nexus'",
+                             teamDomain: 'devneysho', tokenCredentialId: 'slack-alert'
+                     }
+                }
             }
              stage('docker build'){
                  steps{
@@ -52,6 +66,13 @@ pipeline {
                                 docker build -t neysho/achat-backend:1 .
                          '''
                }
+               post {  
+                    failure {
+                            slackSend color: "danger", channel: '#jenkins-alerts',
+                             message: "Pipeline failed in stage 'Docker Build'",
+                             teamDomain: 'devneysho', tokenCredentialId: 'slack-alert'
+                     }
+                }
              }
              stage('docker push'){
                 steps{
@@ -60,10 +81,41 @@ pipeline {
                     // '''
                     sh 'ls'
                 }
+                post {  
+                    failure {
+                            slackSend color: "danger", channel: '#jenkins-alerts',
+                             message: "Pipeline failed in stage 'Docker Push'",
+                             teamDomain: 'devneysho', tokenCredentialId: 'slack-alert'
+                     }
+                }
              }
              stage('Docker compose'){
                 steps{
                     sh 'docker compose up -d'
+                }
+                post {  
+                    failure {
+                            slackSend color: "danger", channel: '#jenkins-alerts',
+                             message: "Pipeline failed in stage 'Docker compose'",
+                             teamDomain: 'devneysho', tokenCredentialId: 'slack-alert'
+                     }
+                }
+            }
+            stage('Trivy Scan'){
+                steps{
+                    sh 'trivy image --scanners vuln neysho/achat-backend:1 > backend-scan.txt'
+                }
+                post { 
+                    success {
+                    slackSend color: "good", channel: '#jenkins-alerts',
+                     slackUploadFile filePath: "backend-scan.txt", initialComment:  "Trivy Scan :",
+                     teamDomain: 'devneysho', tokenCredentialId: 'slack-alert'
+                     } 
+                    failure {
+                            slackSend color: "danger", channel: '#jenkins-alerts',
+                             message: "Pipeline failed in stage 'Trivy Scan'",
+                             teamDomain: 'devneysho', tokenCredentialId: 'slack-alert'
+                     }
                 }
             }
 
@@ -73,8 +125,16 @@ pipeline {
             always {
                 script {
                     cleanWs()
-               }
+                }
+              }
+               success {
+                    slackSend color: "good", channel: '#jenkins-alerts', message: 'Pipeline completed successfully!',
+                     teamDomain: 'devneysho', tokenCredentialId: 'slack-alert'
+              }  
+               failure {
+                    slackSend color: "warning", channel: '#jenkins-alerts', message: 'Check logs.',
+                     teamDomain: 'devneysho', tokenCredentialId: 'slack-alert'
              }
-            }
+         }
 
 }
