@@ -111,11 +111,9 @@ pipeline {
             stage('Trivy Scan'){
                 steps{
                     sh 'trivy image --scanners vuln neysho/achat-backend:1  --timeout 35m > backend-scan.txt'
+                    slackUploadFile filePath: 'backend-scan.txt', initialComment: 'Trivy Scan :'
                 }
                 post { 
-                    success {
-                     slackUploadFile filePath: 'backend-scan.txt', initialComment: 'Trivy Scan :'
-                     } 
                     failure {
                             slackSend color: "danger", channel: '#jenkins-alerts',
                              message: "Pipeline failed in stage 'Trivy Scan'",
