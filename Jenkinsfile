@@ -22,9 +22,9 @@ pipeline {
                 }
                 post {  
                     failure {
-                            slackSend color: "danger", channel: '#jenkins-alerts',
+                            slackSend color: "danger", 
                              message: "Pipeline failed in stage 'Package Maven'",
-                             teamDomain: 'devneysho', tokenCredentialId: 'slack-alert'
+                             tokenCredentialId: 'slack-alert-bot'
                      }
                 }
             }
@@ -39,9 +39,9 @@ pipeline {
              }
              post {  
                     failure {
-                            slackSend color: "danger", channel: '#jenkins-alerts',
+                            slackSend color: "danger", 
                              message: "Pipeline failed in stage 'SonarQube'",
-                             teamDomain: 'devneysho', tokenCredentialId: 'slack-alert'
+                             tokenCredentialId: 'slack-alert-bot'
                      }
                 }
             }
@@ -61,9 +61,9 @@ pipeline {
              }
              post {  
                     failure {
-                            slackSend color: "danger", channel: '#jenkins-alerts',
+                            slackSend color: "danger", 
                              message: "Pipeline failed in stage 'Nexus'",
-                             teamDomain: 'devneysho', tokenCredentialId: 'slack-alert'
+                             tokenCredentialId: 'slack-alert-bot'
                      }
                 }
             }
@@ -75,9 +75,9 @@ pipeline {
                }
                post {  
                     failure {
-                            slackSend color: "danger", channel: '#jenkins-alerts',
+                            slackSend color: "danger", 
                              message: "Pipeline failed in stage 'Docker Build'",
-                             teamDomain: 'devneysho', tokenCredentialId: 'slack-alert'
+                             tokenCredentialId: 'slack-alert-bot'
                      }
                 }
              }
@@ -90,9 +90,9 @@ pipeline {
                 }
                 post {  
                     failure {
-                            slackSend color: "danger", channel: '#jenkins-alerts',
+                            slackSend color: "danger", 
                              message: "Pipeline failed in stage 'Docker Push'",
-                             teamDomain: 'devneysho', tokenCredentialId: 'slack-alert'
+                             tokenCredentialId: 'slack-alert-bot'
                      }
                 }
              }
@@ -102,9 +102,9 @@ pipeline {
                 }
                 post {  
                     failure {
-                            slackSend color: "danger", channel: '#jenkins-alerts',
+                            slackSend color: "danger", 
                              message: "Pipeline failed in stage 'Docker compose'",
-                             teamDomain: 'devneysho', tokenCredentialId: 'slack-alert'
+                             tokenCredentialId: 'slack-alert-bot'
                      }
                 }
             }
@@ -117,9 +117,9 @@ pipeline {
                      slackUploadFile filePath: 'backend-scan.txt', initialComment: 'Trivy Scan :'
                      } 
                     failure {
-                            slackSend color: "danger", channel: '#jenkins-alerts',
+                            slackSend color: "danger", 
                              message: "Pipeline failed in stage 'Trivy Scan'",
-                             teamDomain: 'devneysho', tokenCredentialId: 'slack-alert'
+                             tokenCredentialId: 'slack-alert-bot'
                      }
                 }
             }
@@ -133,12 +133,13 @@ pipeline {
                 }
               }
                success {
-                    slackSend color: "good", channel: '#jenkins-alerts', message: 'Pipeline completed successfully!',
-                     teamDomain: 'devneysho', tokenCredentialId: 'slack-alert'
+                    slackSend color: "good",  message: 'Pipeline completed successfully!',
+                     tokenCredentialId: 'slack-alert-bot'
               }  
                failure {
-                    slackSend color: "warning", channel: '#jenkins-alerts', message: 'Check logs.',
-                     teamDomain: 'devneysho', tokenCredentialId: 'slack-alert'
+                    slackSend color: "warning",
+                     message: 'Check logs.',
+                     tokenCredentialId: 'slack-alert-bot'
              }
          }
 
